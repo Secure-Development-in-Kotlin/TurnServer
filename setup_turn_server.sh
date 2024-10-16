@@ -30,29 +30,26 @@ echo -e "${GREEN}Configuring coturn...${NC}"
 
 sudo bash -c "cat > $CONFIG_FILE" <<EOL
 # Basic TURN configuration
-realm=$REALM
+realm=burnerchat
 listening-port=3478
-tls-listening-port=5349
 listening-ip=$REALM
 relay-ip=$REALM
 external-ip=$REALM
 
 # Force use of TCP
 no-udp
-tcp-relay
+relay-transport=tcp
 
 # Authentication
 lt-cred-mech
 user=$DEFAULT_USERNAME:$DEFAULT_PASSWORD
 
 # Enable detailed logs
-log-file=/var/log/turn.log
+log-file=/tmp/turn.log
 simple-log
 
 # Other useful settings
 fingerprint
-no-multicast-peers
-no-loopback-peers
 EOL
 
 # Enable coturn as a service
@@ -68,9 +65,9 @@ echo -e "${GREEN}Enabling coturn to start on boot...${NC}"
 sudo systemctl enable coturn
 
 # Configure firewall (ufw)
-echo -e "${GREEN}Configuring firewall to allow ports 3478 and 5349...${NC}"
-sudo ufw allow 3478/tcp
-sudo ufw allow 5349/tcp
+# echo -e "${GREEN}Configuring firewall to allow ports 3478 and 5349...${NC}"
+# sudo ufw allow 3478/tcp
+# sudo ufw allow 5349/tcp
 
 echo -e "${GREEN}Configuration complete.${NC}"
 
