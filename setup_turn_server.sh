@@ -73,3 +73,5 @@ sudo ufw allow 3478/tcp
 sudo ufw allow 5349/tcp
 
 echo -e "${GREEN}Configuration complete.${NC}"
+
+sudo systemctl status coturn
